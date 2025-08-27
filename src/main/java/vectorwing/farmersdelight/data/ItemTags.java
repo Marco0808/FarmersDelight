@@ -38,7 +38,7 @@ public class ItemTags extends BlockTagCopyingItemTagProvider
 
 	private void registerMinecraftTags() {
 		tag(net.minecraft.tags.ItemTags.BREAKS_DECORATED_POTS).addTag(ModTags.KNIVES);
-		tag(net.minecraft.tags.ItemTags.TALL_FLOWERS).add(ModItems.WILD_RICE.get());
+        tag(net.minecraft.tags.ItemTags.FLOWERS).add(ModItems.WILD_RICE.get());
 		tag(net.minecraft.tags.ItemTags.PIGLIN_LOVED).add(ModItems.GOLDEN_KNIFE.get());
 		tag(net.minecraft.tags.ItemTags.SIGNS).addTag(ModTags.CANVAS_SIGNS);
 		tag(net.minecraft.tags.ItemTags.HANGING_SIGNS).addTag(ModTags.HANGING_CANVAS_SIGNS);
