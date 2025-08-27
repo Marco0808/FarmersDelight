@@ -36,7 +36,7 @@ public class DataGenerators
 
 		BlockTags blockTags = new BlockTags(output, lookupProvider, helper);
 		generator.addProvider(event.includeServer(), blockTags);
-		generator.addProvider(event.includeServer(), new ItemTags(output, lookupProvider, blockTags.contentsGetter(), helper));
+        generator.addProvider(event.includeServer(), new ItemTags(output, lookupProvider, blockTags.contentsGetter()));
 		generator.addProvider(event.includeServer(), new EntityTags(output, lookupProvider, helper));
 		generator.addProvider(event.includeServer(), new DamageTypeTags(output, lookupProvider, FarmersDelight.MODID, helper));
 
