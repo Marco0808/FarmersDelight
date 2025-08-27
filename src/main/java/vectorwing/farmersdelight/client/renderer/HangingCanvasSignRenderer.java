@@ -39,7 +39,7 @@ public class HangingCanvasSignRenderer extends CanvasSignRenderer
 	}
 
 	@Override
-	public void render(SignBlockEntity blockEntity, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, int packedOverlay) {
+	public void render(SignBlockEntity blockEntity, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, int packedOverlay, Vec3 cameraPos) {
 		BlockState state = blockEntity.getBlockState();
 		SignBlock block = (SignBlock) state.getBlock();
 		HangingSignRenderer.HangingSignModel model = signModel;
