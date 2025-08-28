@@ -38,8 +38,8 @@ import java.util.List;
 public class HorseFeedItem extends Item
 {
 	public static final List<MobEffectInstance> EFFECTS = Lists.newArrayList(
-			new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 6000, 1),
-			new MobEffectInstance(MobEffects.JUMP, 6000, 0));
+			new MobEffectInstance(MobEffects.SPEED, 6000, 1),
+			new MobEffectInstance(MobEffects.JUMP_BOOST, 6000, 0));
 
 	public HorseFeedItem(Properties properties) {
 		super(properties);

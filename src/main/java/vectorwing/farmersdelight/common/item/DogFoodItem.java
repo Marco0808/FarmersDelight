@@ -37,9 +37,9 @@ import java.util.List;
 public class DogFoodItem extends ConsumableItem
 {
 	public static final List<MobEffectInstance> EFFECTS = Lists.newArrayList(
-			new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 6000, 0),
-			new MobEffectInstance(MobEffects.DAMAGE_BOOST, 6000, 0),
-			new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 6000, 0));
+			new MobEffectInstance(MobEffects.SPEED, 6000, 0),
+			new MobEffectInstance(MobEffects.STRENGTH, 6000, 0),
+			new MobEffectInstance(MobEffects.RESISTANCE, 6000, 0));
 
 	public DogFoodItem(Properties properties) {
 		super(properties);
