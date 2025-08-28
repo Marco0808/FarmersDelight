@@ -26,6 +26,7 @@ public class FDRecipes
 		ClientLevel level = minecraft.level;
 
 		if (level != null) {
+			// TODO: The issue is, that the RecipeManager is now only available on the server but I dont know how to get that from here
 			this.recipeManager = level.getRecipeManager();
 		} else {
 			throw new NullPointerException("minecraft world must not be null.");

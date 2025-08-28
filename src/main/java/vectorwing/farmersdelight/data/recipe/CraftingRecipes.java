@@ -1,3 +1,5 @@
+/* Class commented out, as its functions have been moved to Recipes.java, to make use of its protected "shapeless" and "shaped" crafting helper methods
+
 package vectorwing.farmersdelight.data.recipe;
 
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
@@ -49,10 +51,9 @@ public class CraftingRecipes
 				.save(output);
 	}
 
-	/**
-	 * The following recipes should ALWAYS define a custom save location.
-	 * If not, they fall on the minecraft namespace, overriding vanilla recipes instead of being alternatives.
-	 */
+
+	// The following recipes should ALWAYS define a custom save location.
+	// If not, they fall on the minecraft namespace, overriding vanilla recipes instead of being alternatives.
 	private static void recipesVanillaAlternatives(RecipeOutput output) {
 		ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Items.PUMPKIN_SEEDS)
 				.requires(ModItems.PUMPKIN_SLICE.get())
@@ -842,3 +843,4 @@ public class CraftingRecipes
 				.save(output);
 	}
 }
+*/
