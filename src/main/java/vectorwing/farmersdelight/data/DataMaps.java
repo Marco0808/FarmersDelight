@@ -16,7 +16,7 @@ public class DataMaps extends DataMapProvider
 	}
 
 	@Override
-	protected void gather() {
+	protected void gather(HolderLookup.Provider provider) {
 		builder(NeoForgeDataMaps.COMPOSTABLES)
 				// 30% chance
 				.add(ModItems.TREE_BARK.get().asItem().builtInRegistryHolder(), new Compostable(0.3F), false)
