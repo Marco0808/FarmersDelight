@@ -26,34 +26,32 @@ import java.util.concurrent.CompletableFuture;
 public class DataGenerators
 {
 	@SubscribeEvent
-	public static void gatherData(GatherDataEvent event) {
+	public static void gatherData(GatherDataEvent.Client event) {
 		DataGenerator generator = event.getGenerator();
 		PackOutput output = generator.getPackOutput();
 		CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
-		ExistingFileHelper helper = event.getExistingFileHelper();
-		RegistrySetBuilder registrySetBuilder = new RegistrySetBuilder()
-				.add(Registries.ENCHANTMENT, ModEnchantments::bootstrap);
 
-		BlockTags blockTags = new BlockTags(output, lookupProvider, helper);
+		BlockTags blockTags = new BlockTags(output, lookupProvider);
+
 		generator.addProvider(event.includeServer(), blockTags);
         generator.addProvider(event.includeServer(), new ItemTags(output, lookupProvider, blockTags.contentsGetter()));
-		generator.addProvider(event.includeServer(), new EntityTags(output, lookupProvider, helper));
-		generator.addProvider(event.includeServer(), new DamageTypeTags(output, lookupProvider, FarmersDelight.MODID, helper));
+		generator.addProvider(event.includeServer(), new EntityTags(output, lookupProvider));
+		generator.addProvider(event.includeServer(), new DamageTypeTags(output, lookupProvider, FarmersDelight.MODID));
 
 		DatapackBuiltinEntriesProvider datapackProvider = new DatapackBuiltinEntriesProvider(output, lookupProvider, registrySetBuilder, Set.of(FarmersDelight.MODID));
 		CompletableFuture<HolderLookup.Provider> builtinLookupProvider = datapackProvider.getRegistryProvider();
 		generator.addProvider(event.includeServer(), datapackProvider);
-		generator.addProvider(event.includeServer(), new EnchantmentTags(output, builtinLookupProvider, helper));
+		generator.addProvider(event.includeServer(), new EnchantmentTags(output, builtinLookupProvider));
 
 		generator.addProvider(event.includeServer(), new Recipes(output, lookupProvider));
 		generator.addProvider(event.includeServer(), new DataMaps(output, lookupProvider));
-		generator.addProvider(event.includeServer(), new Advancements(output, lookupProvider, helper));
+		generator.addProvider(event.includeServer(), new Advancements(output, lookupProvider));
 		generator.addProvider(event.includeServer(), new LootTableProvider(output, Collections.emptySet(), List.of(
 				new LootTableProvider.SubProviderEntry(FDBlockLoot::new, LootContextParamSets.BLOCK)
 		), lookupProvider));
-		generator.addProvider(event.includeServer(), new StructureUpdater("structures/village/houses", FarmersDelight.MODID, helper, output));
+		generator.addProvider(event.includeServer(), new StructureUpdater("structures/village/houses", FarmersDelight.MODID, output));
 
-		BlockStates blockStates = new BlockStates(output, helper);
+		BlockStates blockStates = new BlockStates(output);
 		generator.addProvider(event.includeClient(), blockStates);
 		generator.addProvider(event.includeClient(), new ItemModels(output, blockStates.models().existingFileHelper));
 	}
