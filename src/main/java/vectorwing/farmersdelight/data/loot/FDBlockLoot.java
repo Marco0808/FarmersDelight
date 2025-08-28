@@ -68,6 +68,42 @@ public class FDBlockLoot extends BlockLootSubProvider
 		dropSelf(ModBlocks.RED_HANGING_CANVAS_SIGN.get());
 		dropSelf(ModBlocks.BLACK_HANGING_CANVAS_SIGN.get());
 
+		dropOther(ModBlocks.CANVAS_WALL_SIGN.get(), ModBlocks.CANVAS_SIGN.get());
+		dropOther(ModBlocks.WHITE_CANVAS_WALL_SIGN.get(), ModBlocks.WHITE_CANVAS_SIGN.get());
+		dropOther(ModBlocks.ORANGE_CANVAS_WALL_SIGN.get(), ModBlocks.ORANGE_CANVAS_SIGN.get());
+		dropOther(ModBlocks.MAGENTA_CANVAS_WALL_SIGN.get(), ModBlocks.MAGENTA_CANVAS_SIGN.get());
+		dropOther(ModBlocks.LIGHT_BLUE_CANVAS_WALL_SIGN.get(), ModBlocks.LIGHT_BLUE_CANVAS_SIGN.get());
+		dropOther(ModBlocks.YELLOW_CANVAS_WALL_SIGN.get(), ModBlocks.YELLOW_CANVAS_SIGN.get());
+		dropOther(ModBlocks.LIME_CANVAS_WALL_SIGN.get(), ModBlocks.LIME_CANVAS_SIGN.get());
+		dropOther(ModBlocks.PINK_CANVAS_WALL_SIGN.get(), ModBlocks.PINK_CANVAS_SIGN.get());
+		dropOther(ModBlocks.GRAY_CANVAS_WALL_SIGN.get(), ModBlocks.GRAY_CANVAS_SIGN.get());
+		dropOther(ModBlocks.LIGHT_GRAY_CANVAS_WALL_SIGN.get(), ModBlocks.LIGHT_GRAY_CANVAS_SIGN.get());
+		dropOther(ModBlocks.CYAN_CANVAS_WALL_SIGN.get(), ModBlocks.CYAN_CANVAS_SIGN.get());
+		dropOther(ModBlocks.PURPLE_CANVAS_WALL_SIGN.get(), ModBlocks.PURPLE_CANVAS_SIGN.get());
+		dropOther(ModBlocks.BLUE_CANVAS_WALL_SIGN.get(), ModBlocks.BLUE_CANVAS_SIGN.get());
+		dropOther(ModBlocks.BROWN_CANVAS_WALL_SIGN.get(), ModBlocks.BROWN_CANVAS_SIGN.get());
+		dropOther(ModBlocks.GREEN_CANVAS_WALL_SIGN.get(), ModBlocks.GREEN_CANVAS_SIGN.get());
+		dropOther(ModBlocks.RED_CANVAS_WALL_SIGN.get(), ModBlocks.RED_CANVAS_SIGN.get());
+		dropOther(ModBlocks.BLACK_CANVAS_WALL_SIGN.get(), ModBlocks.BLACK_CANVAS_SIGN.get());
+
+		dropOther(ModBlocks.HANGING_CANVAS_WALL_SIGN.get(), ModBlocks.HANGING_CANVAS_SIGN.get());
+		dropOther(ModBlocks.WHITE_HANGING_CANVAS_WALL_SIGN.get(), ModBlocks.WHITE_HANGING_CANVAS_SIGN.get());
+		dropOther(ModBlocks.ORANGE_HANGING_CANVAS_WALL_SIGN.get(), ModBlocks.ORANGE_HANGING_CANVAS_SIGN.get());
+		dropOther(ModBlocks.MAGENTA_HANGING_CANVAS_WALL_SIGN.get(), ModBlocks.MAGENTA_HANGING_CANVAS_SIGN.get());
+		dropOther(ModBlocks.LIGHT_BLUE_HANGING_CANVAS_WALL_SIGN.get(), ModBlocks.LIGHT_BLUE_HANGING_CANVAS_SIGN.get());
+		dropOther(ModBlocks.YELLOW_HANGING_CANVAS_WALL_SIGN.get(), ModBlocks.YELLOW_HANGING_CANVAS_SIGN.get());
+		dropOther(ModBlocks.LIME_HANGING_CANVAS_WALL_SIGN.get(), ModBlocks.LIME_HANGING_CANVAS_SIGN.get());
+		dropOther(ModBlocks.PINK_HANGING_CANVAS_WALL_SIGN.get(), ModBlocks.PINK_HANGING_CANVAS_SIGN.get());
+		dropOther(ModBlocks.GRAY_HANGING_CANVAS_WALL_SIGN.get(), ModBlocks.GRAY_HANGING_CANVAS_SIGN.get());
+		dropOther(ModBlocks.LIGHT_GRAY_HANGING_CANVAS_WALL_SIGN.get(), ModBlocks.LIGHT_GRAY_HANGING_CANVAS_SIGN.get());
+		dropOther(ModBlocks.CYAN_HANGING_CANVAS_WALL_SIGN.get(), ModBlocks.CYAN_HANGING_CANVAS_SIGN.get());
+		dropOther(ModBlocks.PURPLE_HANGING_CANVAS_WALL_SIGN.get(), ModBlocks.PURPLE_HANGING_CANVAS_SIGN.get());
+		dropOther(ModBlocks.BLUE_HANGING_CANVAS_WALL_SIGN.get(), ModBlocks.BLUE_HANGING_CANVAS_SIGN.get());
+		dropOther(ModBlocks.BROWN_HANGING_CANVAS_WALL_SIGN.get(), ModBlocks.BROWN_HANGING_CANVAS_SIGN.get());
+		dropOther(ModBlocks.GREEN_HANGING_CANVAS_WALL_SIGN.get(), ModBlocks.GREEN_HANGING_CANVAS_SIGN.get());
+		dropOther(ModBlocks.RED_HANGING_CANVAS_WALL_SIGN.get(), ModBlocks.RED_HANGING_CANVAS_SIGN.get());
+		dropOther(ModBlocks.BLACK_HANGING_CANVAS_WALL_SIGN.get(), ModBlocks.BLACK_HANGING_CANVAS_SIGN.get());
+
 		dropNamedContainer(ModBlocks.OAK_CABINET.get());
 		dropNamedContainer(ModBlocks.SPRUCE_CABINET.get());
 		dropNamedContainer(ModBlocks.BIRCH_CABINET.get());
@@ -85,8 +121,6 @@ public class FDBlockLoot extends BlockLootSubProvider
 //		dropSelf(ModBlocks.FULL_TATAMI_MAT.get());		Drops only from "head" side
 		dropSelf(ModBlocks.HALF_TATAMI_MAT.get());
 
-		// Canvas Signs only need it for the standard block; wall blocks inherit it.
-
 		// Mushroom Colonies are rather complex...
 		dropSelf(ModBlocks.ORGANIC_COMPOST.get());
 		dropSelf(ModBlocks.RICH_SOIL.get());
@@ -102,7 +136,7 @@ public class FDBlockLoot extends BlockLootSubProvider
 	@Override
 	protected void add(Block block, LootTable.Builder builder) {
 		this.generatedLootTables.add(block);
-		this.map.put(block.getLootTable(), builder);
+		this.map.put(block.getLootTable().get(), builder);
 	}
 
 	@Override
