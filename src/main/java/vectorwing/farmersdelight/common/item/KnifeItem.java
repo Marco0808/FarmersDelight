@@ -79,7 +79,7 @@ public class KnifeItem extends DiggerItem
 		return KNIFE_ACTIONS.contains(toolAction);
 	}
 
-	@EventBusSubscriber(modid = FarmersDelight.MODID, bus = EventBusSubscriber.Bus.GAME)
+	@EventBusSubscriber(modid = FarmersDelight.MODID)
 	public static class KnifeEvents
 	{
 		@SubscribeEvent

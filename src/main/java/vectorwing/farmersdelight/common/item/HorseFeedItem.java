@@ -45,7 +45,7 @@ public class HorseFeedItem extends Item
 		super(properties);
 	}
 
-	@EventBusSubscriber(modid = FarmersDelight.MODID, bus = EventBusSubscriber.Bus.GAME)
+	@EventBusSubscriber(modid = FarmersDelight.MODID)
 	public static class HorseFeedEvent
 	{
 		@SubscribeEvent

@@ -25,7 +25,7 @@ import vectorwing.farmersdelight.client.renderer.*;
 import vectorwing.farmersdelight.common.item.component.ItemStackWrapper;
 import vectorwing.farmersdelight.common.registry.*;
 
-@EventBusSubscriber(modid = FarmersDelight.MODID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+@EventBusSubscriber(modid = FarmersDelight.MODID, value = Dist.CLIENT)
 public class ClientSetupEvents
 {
 	public static void init(final FMLClientSetupEvent event) {
