@@ -79,7 +79,7 @@ public class StoveBlock extends BaseEntityBlock
 				}
 				extinguish(state, level, pos);
 				if (!player.isCreative()) {
-					player.setItemInHand(hand, heldStack.getCraftingRemainingItem());
+					player.setItemInHand(hand, heldStack.getCraftingRemainder());
 				}
 				return InteractionResult.SUCCESS;
 			}
