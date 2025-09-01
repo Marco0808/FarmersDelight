@@ -176,6 +176,7 @@ idea {
 
 ////////////////
 
-//compileJava {
+compileJava {
+      options.compilerArgs << "-Xmaxerrs" << "1000"
 //    options.compilerArgs << "-Acrafttweaker.processor.document.output_directory=${file('docsOut')}"
-//}
+}
