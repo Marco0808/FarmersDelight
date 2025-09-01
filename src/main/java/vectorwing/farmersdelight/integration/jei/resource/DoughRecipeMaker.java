@@ -14,7 +14,7 @@ public class DoughRecipeMaker
 {
 	public static List<RecipeHolder<CraftingRecipe>> createRecipe() {
 		NonNullList<Ingredient> inputs = NonNullList.of(
-				Ingredient.EMPTY,
+				Ingredient.of(),
 				Ingredient.of(Items.WHEAT),
 				Ingredient.of(Items.WATER_BUCKET)
 		);

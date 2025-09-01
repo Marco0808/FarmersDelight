@@ -67,7 +67,7 @@ public class CookingPotRecipeManager implements IRecipeManager
                                 cookingPotRecipeBookTab,
                                 ListUtils.mapArrayIndexSet(inputs,
                                         IIngredient::asVanillaIngredient,
-                                        NonNullList.withSize(inputs.length, Ingredient.EMPTY)),
+										NonNullList.withSize(inputs.length, Ingredient.of())),
                                 output.getInternal(),
                                 container == null ? ItemStack.EMPTY : container.getInternal(),
                                 experience,

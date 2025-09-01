@@ -194,7 +194,7 @@ public class CookingPotRecipe implements Recipe<RecipeWrapper>
 			String groupIn = buffer.readUtf();
 			CookingPotRecipeBookTab tabIn = CookingPotRecipeBookTab.findByName(buffer.readUtf());
 			int i = buffer.readVarInt();
-			NonNullList<Ingredient> inputItemsIn = NonNullList.withSize(i, Ingredient.EMPTY);
+			NonNullList<Ingredient> inputItemsIn = NonNullList.withSize(i, Ingredient.of());
 
 			inputItemsIn.replaceAll(ignored -> Ingredient.CONTENTS_STREAM_CODEC.decode(buffer));
 

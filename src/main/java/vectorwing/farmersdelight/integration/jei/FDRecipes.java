@@ -47,7 +47,7 @@ public class FDRecipes
 
 		specialRecipe.ifPresent((recipe) -> {
 			NonNullList<Ingredient> inputs = NonNullList.of(
-					Ingredient.EMPTY,
+					Ingredient.of(),
 					Ingredient.of(Items.WHEAT),
 					Ingredient.of(Items.WATER_BUCKET)
 			);
