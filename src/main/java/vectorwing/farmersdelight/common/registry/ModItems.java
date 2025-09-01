@@ -209,13 +209,13 @@ public class ModItems
 	public static final Supplier<Item> FLINT_KNIFE = registerWithTab("flint_knife",
 			() -> new KnifeItem(ModMaterials.FLINT, knifeItem(ModMaterials.FLINT)));
 	public static final Supplier<Item> IRON_KNIFE = registerWithTab("iron_knife",
-			() -> new KnifeItem(Tiers.IRON, knifeItem(Tiers.IRON)));
+			() -> new KnifeItem(ToolMaterial.IRON, knifeItem(ToolMaterial.IRON)));
 	public static final Supplier<Item> DIAMOND_KNIFE = registerWithTab("diamond_knife",
-			() -> new KnifeItem(Tiers.DIAMOND, knifeItem(Tiers.DIAMOND)));
+			() -> new KnifeItem(ToolMaterial.DIAMOND, knifeItem(ToolMaterial.DIAMOND)));
 	public static final Supplier<Item> NETHERITE_KNIFE = registerWithTab("netherite_knife",
-			() -> new KnifeItem(Tiers.NETHERITE, knifeItem(Tiers.NETHERITE).fireResistant()));
+			() -> new KnifeItem(ToolMaterial.NETHERITE, knifeItem(ToolMaterial.NETHERITE).fireResistant()));
 	public static final Supplier<Item> GOLDEN_KNIFE = registerWithTab("golden_knife",
-			() -> new KnifeItem(Tiers.GOLD, knifeItem(Tiers.GOLD)));
+			() -> new KnifeItem(ToolMaterial.GOLD, knifeItem(ToolMaterial.GOLD)));
 
 	public static final Supplier<Item> STRAW = registerWithTab("straw", () -> new FuelItem(basicItem()));
 	public static final Supplier<Item> CANVAS = registerWithTab("canvas", () -> new FuelItem(basicItem(), 400));

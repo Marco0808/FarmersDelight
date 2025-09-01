@@ -12,9 +12,10 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DiggerItem;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.Tier;
+import net.minecraft.world.item.ToolMaterial;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
@@ -41,7 +42,7 @@ public class KnifeItem extends DiggerItem
 {
 	public static final Set<ItemAbility> KNIFE_ACTIONS = Set.of(ItemAbilities.SHEARS_CARVE, ItemAbilities.SWORD_DIG);
 
-	public KnifeItem(Tier tier, Properties properties) {
+	public KnifeItem(ToolMaterial tier, float attackDamage, float attackSpeed, Properties properties) {
 		super(tier, ModTags.MINEABLE_WITH_KNIFE, properties);
 	}
 
