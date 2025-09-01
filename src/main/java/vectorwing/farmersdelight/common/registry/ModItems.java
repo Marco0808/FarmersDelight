@@ -3,12 +3,16 @@ package vectorwing.farmersdelight.common.registry;
 import com.google.common.collect.Sets;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.*;
+import net.minecraft.world.item.component.Consumable;
+import net.minecraft.world.item.component.Consumables;
+import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import vectorwing.farmersdelight.FarmersDelight;
 import vectorwing.farmersdelight.common.FoodValues;
 import vectorwing.farmersdelight.common.item.*;
 
 import java.util.LinkedHashSet;
+import java.util.Map;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -32,13 +36,17 @@ public class ModItems
 	public static Item.Properties stackSizeItemProps(int maxStackSize) {
 		return stackSizeItemProps(maxStackSize);
 	}
-	
+
 	public static Item.Properties foodItemProps(FoodProperties food) {
-		return new Item.Properties().food(food);
+		return foodItemProps(food, Consumables.DEFAULT_FOOD);
 	}
 
-	public static Item.Properties bowlFoodItemProps(FoodProperties food) {
-		return new Item.Properties().food(food).craftRemainder(Items.BOWL).stacksTo(16);
+	public static Item.Properties foodItemProps(FoodProperties food, Consumable consumable) {
+		return new Item.Properties().food(food, consumable);
+	}
+
+	public static Item.Properties bowlFoodItemProps(FoodProperties food, Consumable consumable) {
+		return new Item.Properties().food(food, consumable).craftRemainder(Items.BOWL).stacksTo(16);
 	}
 
 	public static Item.Properties drinkItemProps() {
@@ -248,25 +256,25 @@ public class ModItems
 	public static final Supplier<Item> TOMATO = registerWithTab("tomato",
 			(props) -> new Item(props), foodItemProps(FoodValues.TOMATO));
 	public static final Supplier<Item> ONION = registerWithTab("onion",
-			(props) -> new ItemNameBlockItem(ModBlocks.ONION_CROP.get(), props), foodItemProps(FoodValues.ONION));
+			(props) -> new BlockItem(ModBlocks.ONION_CROP.get(), props), foodItemProps(FoodValues.ONION));
 	public static final Supplier<Item> RICE_PANICLE = registerWithTab("rice_panicle", (props) -> new Item(props));
 	public static final Supplier<Item> RICE = registerWithTab("rice",
 			(props) -> new RiceItem(ModBlocks.RICE_CROP.get(), props));
-	public static final Supplier<Item> CABBAGE_SEEDS = registerWithTab("cabbage_seeds", (props) -> new ItemNameBlockItem(ModBlocks.CABBAGE_CROP.get(), props));
-	public static final Supplier<Item> TOMATO_SEEDS = registerWithTab("tomato_seeds", (props) -> new ItemNameBlockItem(ModBlocks.BUDDING_TOMATO_CROP.get(), props)
-	{
-		@Override
-		public void registerBlocks(Map<Block, Item> blockToItemMap, Item item) {
-			super.registerBlocks(blockToItemMap, item);
-			blockToItemMap.put(ModBlocks.TOMATO_CROP.get(), item);
-		}
-
-		@Override
-		public void removeFromBlockToItemMap(Map<Block, Item> blockToItemMap, Item itemIn) {
-			super.removeFromBlockToItemMap(blockToItemMap, itemIn);
-			blockToItemMap.remove(ModBlocks.TOMATO_CROP.get());
-		}
-	});
+	public static final Supplier<Item> CABBAGE_SEEDS = registerWithTab("cabbage_seeds", (props) -> new BlockItem(ModBlocks.CABBAGE_CROP.get(), props));
+	public static final Supplier<Item> TOMATO_SEEDS = registerWithTab("tomato_seeds", (props) -> new BlockItem(ModBlocks.BUDDING_TOMATO_CROP.get(), props));
+//	{
+//		@Override
+//		public void registerBlocks(Map<Block, Item> blockToItemMap, Item item) {
+//			super.registerBlocks(blockToItemMap, item);
+//			blockToItemMap.put(ModBlocks.TOMATO_CROP.get(), item);
+//		}
+//
+//		@Override
+//		public void removeFromBlockToItemMap(Map<Block, Item> blockToItemMap, Item itemIn) {
+//			super.removeFromBlockToItemMap(blockToItemMap, itemIn);
+//			blockToItemMap.remove(ModBlocks.TOMATO_CROP.get());
+//		}
+//	});
 	public static final Supplier<Item> ROTTEN_TOMATO = registerWithTab("rotten_tomato",
 			(props) -> new RottenTomatoItem(props), stackSizeItemProps(16));
 
@@ -278,7 +286,7 @@ public class ModItems
 	public static final Supplier<Item> HOT_COCOA = registerWithTab("hot_cocoa",
 			(props) -> new HotCocoaItem(props), drinkItemProps());
 	public static final Supplier<Item> APPLE_CIDER = registerWithTab("apple_cider",
-			(props) -> new DrinkableItem(props, true, false), drinkItemProps().food(FoodValues.APPLE_CIDER));
+			(props) -> new DrinkableItem(props, true, false), drinkItemProps().food(FoodValues.APPLE_CIDER, FoodValues.APPLE_CIDER_EFFECT));
 	public static final Supplier<Item> MELON_JUICE = registerWithTab("melon_juice",
 			(props) -> new MelonJuiceItem(props), drinkItemProps());
 	public static final Supplier<Item> TOMATO_SAUCE = registerWithTab("tomato_sauce",
@@ -290,35 +298,35 @@ public class ModItems
 	public static final Supplier<Item> PUMPKIN_SLICE = registerWithTab("pumpkin_slice",
 			(props) -> new Item(props), foodItemProps(FoodValues.PUMPKIN_SLICE));
 	public static final Supplier<Item> CABBAGE_LEAF = registerWithTab("cabbage_leaf",
-			(props) -> new Item(props), foodItemProps(FoodValues.CABBAGE_LEAF));
+			(props) -> new Item(props), foodItemProps(FoodValues.CABBAGE_LEAF, FoodValues.QUICK_FOOD_EFFECT));
 	public static final Supplier<Item> MINCED_BEEF = registerWithTab("minced_beef",
-			(props) -> new Item(props), foodItemProps(FoodValues.MINCED_BEEF));
+			(props) -> new Item(props), foodItemProps(FoodValues.MINCED_BEEF, FoodValues.QUICK_FOOD_EFFECT));
 	public static final Supplier<Item> BEEF_PATTY = registerWithTab("beef_patty",
-			(props) -> new Item(props), foodItemProps(FoodValues.BEEF_PATTY));
+			(props) -> new Item(props), foodItemProps(FoodValues.BEEF_PATTY, FoodValues.QUICK_FOOD_EFFECT));
 	public static final Supplier<Item> CHICKEN_CUTS = registerWithTab("chicken_cuts",
 			(props) -> new Item(props), foodItemProps(FoodValues.CHICKEN_CUTS));
 	public static final Supplier<Item> COOKED_CHICKEN_CUTS = registerWithTab("cooked_chicken_cuts",
-			(props) -> new Item(props), foodItemProps(FoodValues.COOKED_CHICKEN_CUTS));
+			(props) -> new Item(props), foodItemProps(FoodValues.COOKED_CHICKEN_CUTS, FoodValues.QUICK_FOOD_EFFECT));
 	public static final Supplier<Item> BACON = registerWithTab("bacon",
-			(props) -> new Item(props), foodItemProps(FoodValues.BACON));
+			(props) -> new Item(props), foodItemProps(FoodValues.BACON, FoodValues.QUICK_FOOD_EFFECT));
 	public static final Supplier<Item> COOKED_BACON = registerWithTab("cooked_bacon",
-			(props) -> new Item(props), foodItemProps(FoodValues.COOKED_BACON));
+			(props) -> new Item(props), foodItemProps(FoodValues.COOKED_BACON, FoodValues.QUICK_FOOD_EFFECT));
 	public static final Supplier<Item> COD_SLICE = registerWithTab("cod_slice",
-			(props) -> new Item(props), foodItemProps(FoodValues.COD_SLICE));
+			(props) -> new Item(props), foodItemProps(FoodValues.COD_SLICE, FoodValues.QUICK_FOOD_EFFECT));
 	public static final Supplier<Item> COOKED_COD_SLICE = registerWithTab("cooked_cod_slice",
-			(props) -> new Item(props), foodItemProps(FoodValues.COOKED_COD_SLICE));
+			(props) -> new Item(props), foodItemProps(FoodValues.COOKED_COD_SLICE, FoodValues.QUICK_FOOD_EFFECT));
 	public static final Supplier<Item> SALMON_SLICE = registerWithTab("salmon_slice",
-			(props) -> new Item(props), foodItemProps(FoodValues.SALMON_SLICE));
+			(props) -> new Item(props), foodItemProps(FoodValues.SALMON_SLICE, FoodValues.QUICK_FOOD_EFFECT));
 	public static final Supplier<Item> COOKED_SALMON_SLICE = registerWithTab("cooked_salmon_slice",
-			(props) -> new Item(props), foodItemProps(FoodValues.COOKED_SALMON_SLICE));
+			(props) -> new Item(props), foodItemProps(FoodValues.COOKED_SALMON_SLICE, FoodValues.QUICK_FOOD_EFFECT));
 	public static final Supplier<Item> MUTTON_CHOPS = registerWithTab("mutton_chops",
-			(props) -> new Item(props), foodItemProps(FoodValues.MUTTON_CHOPS));
+			(props) -> new Item(props), foodItemProps(FoodValues.MUTTON_CHOPS, FoodValues.QUICK_FOOD_EFFECT));
 	public static final Supplier<Item> COOKED_MUTTON_CHOPS = registerWithTab("cooked_mutton_chops",
-			(props) -> new Item(props), foodItemProps(FoodValues.COOKED_MUTTON_CHOPS));
+			(props) -> new Item(props), foodItemProps(FoodValues.COOKED_MUTTON_CHOPS, FoodValues.QUICK_FOOD_EFFECT));
 	public static final Supplier<Item> HAM = registerWithTab("ham",
-			(props) -> new Item(props), foodItemProps(FoodValues.HAM));
+			(props) -> new Item(props), foodItemProps(FoodValues.HAM, FoodValues.QUICK_FOOD_EFFECT));
 	public static final Supplier<Item> SMOKED_HAM = registerWithTab("smoked_ham",
-			(props) -> new Item(props), foodItemProps(FoodValues.SMOKED_HAM));
+			(props) -> new Item(props), foodItemProps(FoodValues.SMOKED_HAM, FoodValues.QUICK_FOOD_EFFECT));
 
 	// Sweets
 	public static final Supplier<Item> PIE_CRUST = registerWithTab("pie_crust",
@@ -330,29 +338,29 @@ public class ModItems
 	public static final Supplier<Item> CHOCOLATE_PIE = registerWithTab("chocolate_pie",
 			(props) -> new BlockItem(ModBlocks.CHOCOLATE_PIE.get(), props));
 	public static final Supplier<Item> CAKE_SLICE = registerWithTab("cake_slice",
-			(props) -> new Item(props), foodItemProps(FoodValues.CAKE_SLICE));
+			(props) -> new Item(props), foodItemProps(FoodValues.CAKE_SLICE, FoodValues.CAKE_SLICE_EFFECT));
 	public static final Supplier<Item> APPLE_PIE_SLICE = registerWithTab("apple_pie_slice",
-			(props) -> new Item(props), foodItemProps(FoodValues.PIE_SLICE));
+			(props) -> new Item(props), foodItemProps(FoodValues.PIE_SLICE, FoodValues.PIE_SLICE_EFFECT));
 	public static final Supplier<Item> SWEET_BERRY_CHEESECAKE_SLICE = registerWithTab("sweet_berry_cheesecake_slice",
-			(props) -> new Item(props), foodItemProps(FoodValues.PIE_SLICE));
+			(props) -> new Item(props), foodItemProps(FoodValues.PIE_SLICE, FoodValues.PIE_SLICE_EFFECT));
 	public static final Supplier<Item> CHOCOLATE_PIE_SLICE = registerWithTab("chocolate_pie_slice",
-			(props) -> new Item(props), foodItemProps(FoodValues.PIE_SLICE));
+			(props) -> new Item(props), foodItemProps(FoodValues.PIE_SLICE, FoodValues.PIE_SLICE_EFFECT));
 	public static final Supplier<Item> SWEET_BERRY_COOKIE = registerWithTab("sweet_berry_cookie",
-			(props) -> new Item(props), foodItemProps(FoodValues.COOKIES));
+			(props) -> new Item(props), foodItemProps(FoodValues.COOKIES, FoodValues.QUICK_FOOD_EFFECT));
 	public static final Supplier<Item> HONEY_COOKIE = registerWithTab("honey_cookie",
-			(props) -> new Item(props), foodItemProps(FoodValues.COOKIES));
+			(props) -> new Item(props), foodItemProps(FoodValues.COOKIES, FoodValues.QUICK_FOOD_EFFECT));
 	public static final Supplier<Item> MELON_POPSICLE = registerWithTab("melon_popsicle",
-			(props) -> new PopsicleItem(props), foodItemProps(FoodValues.POPSICLE));
+			(props) -> new PopsicleItem(props), foodItemProps(FoodValues.POPSICLE, FoodValues.QUICK_FOOD_EFFECT));
 	public static final Supplier<Item> GLOW_BERRY_CUSTARD = registerWithTab("glow_berry_custard",
-			(props) -> new ConsumableItem(props), foodItemProps(FoodValues.GLOW_BERRY_CUSTARD).craftRemainder(Items.GLASS_BOTTLE).stacksTo(16));
+			(props) -> new ConsumableItem(props), foodItemProps(FoodValues.GLOW_BERRY_CUSTARD, FoodValues.GLOW_BERRY_CUSTARD_EFFECT).craftRemainder(Items.GLASS_BOTTLE).stacksTo(16));
 	public static final Supplier<Item> FRUIT_SALAD = registerWithTab("fruit_salad",
-			(props) -> new ConsumableItem(props, true), bowlFoodItemProps(FoodValues.FRUIT_SALAD));
+			(props) -> new ConsumableItem(props, true), bowlFoodItemProps(FoodValues.FRUIT_SALAD, FoodValues.FRUIT_SALAD_EFFECT));
 
 	// Basic Meals
 	public static final Supplier<Item> MIXED_SALAD = registerWithTab("mixed_salad",
-			(props) -> new ConsumableItem(props, true), bowlFoodItemProps(FoodValues.MIXED_SALAD));
+			(props) -> new ConsumableItem(props, true), bowlFoodItemProps(FoodValues.MIXED_SALAD, FoodValues.MIXED_SALAD_EFFECT));
 	public static final Supplier<Item> NETHER_SALAD = registerWithTab("nether_salad",
-			(props) -> new ConsumableItem(props), bowlFoodItemProps(FoodValues.NETHER_SALAD));
+			(props) -> new ConsumableItem(props), bowlFoodItemProps(FoodValues.NETHER_SALAD, FoodValues.NETHER_SALAD_EFFECT));
 	public static final Supplier<Item> BARBECUE_STICK = registerWithTab("barbecue_stick",
 			(props) -> new Item(props), foodItemProps(FoodValues.BARBECUE_STICK));
 	public static final Supplier<Item> EGG_SANDWICH = registerWithTab("egg_sandwich",
@@ -378,79 +386,79 @@ public class ModItems
 	public static final Supplier<Item> KELP_ROLL = registerWithTab("kelp_roll",
 			(props) -> new Item(props), foodItemProps(FoodValues.KELP_ROLL));
 	public static final Supplier<Item> KELP_ROLL_SLICE = registerWithTab("kelp_roll_slice",
-			(props) -> new Item(props), foodItemProps(FoodValues.KELP_ROLL_SLICE));
+			(props) -> new Item(props), foodItemProps(FoodValues.KELP_ROLL_SLICE, FoodValues.QUICK_FOOD_EFFECT));
 
 	// Soups and Stews
 	public static final Supplier<Item> COOKED_RICE = registerWithTab("cooked_rice",
-			(props) -> new ConsumableItem(props, true), bowlFoodItemProps(FoodValues.COOKED_RICE));
+			(props) -> new ConsumableItem(props, true), bowlFoodItemProps(FoodValues.COOKED_RICE, FoodValues.BRIEF_COMFORT_EFFECT));
 	public static final Supplier<Item> BONE_BROTH = registerWithTab("bone_broth",
-			(props) -> new DrinkableItem(props, true), bowlFoodItemProps(FoodValues.BONE_BROTH));
+			(props) -> new DrinkableItem(props, true), bowlFoodItemProps(FoodValues.BONE_BROTH, FoodValues.SHORT_COMFORT_EFFECT));
 	public static final Supplier<Item> BEEF_STEW = registerWithTab("beef_stew",
-			(props) -> new ConsumableItem(props, true), bowlFoodItemProps(FoodValues.BEEF_STEW));
+			(props) -> new ConsumableItem(props, true), bowlFoodItemProps(FoodValues.BEEF_STEW, FoodValues.MEDIUM_COMFORT_EFFECT));
 	public static final Supplier<Item> CHICKEN_SOUP = registerWithTab("chicken_soup",
-			(props) -> new ConsumableItem(props, true), bowlFoodItemProps(FoodValues.CHICKEN_SOUP));
+			(props) -> new ConsumableItem(props, true), bowlFoodItemProps(FoodValues.CHICKEN_SOUP, FoodValues.LONG_COMFORT_EFFECT));
 	public static final Supplier<Item> VEGETABLE_SOUP = registerWithTab("vegetable_soup",
-			(props) -> new ConsumableItem(props, true), bowlFoodItemProps(FoodValues.VEGETABLE_SOUP));
+			(props) -> new ConsumableItem(props, true), bowlFoodItemProps(FoodValues.VEGETABLE_SOUP, FoodValues.MEDIUM_COMFORT_EFFECT));
 	public static final Supplier<Item> FISH_STEW = registerWithTab("fish_stew",
-			(props) -> new ConsumableItem(props, true), bowlFoodItemProps(FoodValues.FISH_STEW));
+			(props) -> new ConsumableItem(props, true), bowlFoodItemProps(FoodValues.FISH_STEW, FoodValues.MEDIUM_COMFORT_EFFECT));
 	public static final Supplier<Item> FRIED_RICE = registerWithTab("fried_rice",
-			(props) -> new ConsumableItem(props, true), bowlFoodItemProps(FoodValues.FRIED_RICE));
+			(props) -> new ConsumableItem(props, true), bowlFoodItemProps(FoodValues.FRIED_RICE, FoodValues.LONG_COMFORT_EFFECT));
 	public static final Supplier<Item> PUMPKIN_SOUP = registerWithTab("pumpkin_soup",
-			(props) -> new ConsumableItem(props, true), bowlFoodItemProps(FoodValues.PUMPKIN_SOUP));
+			(props) -> new ConsumableItem(props, true), bowlFoodItemProps(FoodValues.PUMPKIN_SOUP, FoodValues.LONG_COMFORT_EFFECT));
 	public static final Supplier<Item> BAKED_COD_STEW = registerWithTab("baked_cod_stew",
-			(props) -> new ConsumableItem(props, true), bowlFoodItemProps(FoodValues.BAKED_COD_STEW));
+			(props) -> new ConsumableItem(props, true), bowlFoodItemProps(FoodValues.BAKED_COD_STEW, FoodValues.LONG_COMFORT_EFFECT));
 	public static final Supplier<Item> NOODLE_SOUP = registerWithTab("noodle_soup",
-			(props) -> new ConsumableItem(props, true), bowlFoodItemProps(FoodValues.NOODLE_SOUP));
+			(props) -> new ConsumableItem(props, true), bowlFoodItemProps(FoodValues.NOODLE_SOUP, FoodValues.LONG_COMFORT_EFFECT));
 
 	// Plated Meals
 	public static final Supplier<Item> BACON_AND_EGGS = registerWithTab("bacon_and_eggs",
-			(props) -> new ConsumableItem(props, true), bowlFoodItemProps(FoodValues.BACON_AND_EGGS));
+			(props) -> new ConsumableItem(props, true), bowlFoodItemProps(FoodValues.BACON_AND_EGGS, FoodValues.SHORT_NOURISHMENT_EFFECT));
 	public static final Supplier<Item> PASTA_WITH_MEATBALLS = registerWithTab("pasta_with_meatballs",
-			(props) -> new ConsumableItem(props, true), bowlFoodItemProps(FoodValues.PASTA_WITH_MEATBALLS));
+			(props) -> new ConsumableItem(props, true), bowlFoodItemProps(FoodValues.PASTA_WITH_MEATBALLS, FoodValues.MEDIUM_NOURISHMENT_EFFECT));
 	public static final Supplier<Item> PASTA_WITH_MUTTON_CHOP = registerWithTab("pasta_with_mutton_chop",
-			(props) -> new ConsumableItem(props, true), bowlFoodItemProps(FoodValues.PASTA_WITH_MUTTON_CHOP));
+			(props) -> new ConsumableItem(props, true), bowlFoodItemProps(FoodValues.PASTA_WITH_MUTTON_CHOP, FoodValues.MEDIUM_NOURISHMENT_EFFECT));
 	public static final Supplier<Item> MUSHROOM_RICE = registerWithTab("mushroom_rice",
-			(props) -> new ConsumableItem(props, true), bowlFoodItemProps(FoodValues.MUSHROOM_RICE));
+			(props) -> new ConsumableItem(props, true), bowlFoodItemProps(FoodValues.MUSHROOM_RICE, FoodValues.MEDIUM_NOURISHMENT_EFFECT));
 	public static final Supplier<Item> ROASTED_MUTTON_CHOPS = registerWithTab("roasted_mutton_chops",
-			(props) -> new ConsumableItem(props, true), bowlFoodItemProps(FoodValues.ROASTED_MUTTON_CHOPS));
+			(props) -> new ConsumableItem(props, true), bowlFoodItemProps(FoodValues.ROASTED_MUTTON_CHOPS, FoodValues.LONG_NOURISHMENT_EFFECT));
 	public static final Supplier<Item> VEGETABLE_NOODLES = registerWithTab("vegetable_noodles",
-			(props) -> new ConsumableItem(props, true), bowlFoodItemProps(FoodValues.VEGETABLE_NOODLES));
+			(props) -> new ConsumableItem(props, true), bowlFoodItemProps(FoodValues.VEGETABLE_NOODLES, FoodValues.LONG_NOURISHMENT_EFFECT));
 	public static final Supplier<Item> STEAK_AND_POTATOES = registerWithTab("steak_and_potatoes",
-			(props) -> new ConsumableItem(props, true), bowlFoodItemProps(FoodValues.STEAK_AND_POTATOES));
+			(props) -> new ConsumableItem(props, true), bowlFoodItemProps(FoodValues.STEAK_AND_POTATOES, FoodValues.MEDIUM_NOURISHMENT_EFFECT));
 	public static final Supplier<Item> RATATOUILLE = registerWithTab("ratatouille",
-			(props) -> new ConsumableItem(props, true), bowlFoodItemProps(FoodValues.RATATOUILLE));
+			(props) -> new ConsumableItem(props, true), bowlFoodItemProps(FoodValues.RATATOUILLE, FoodValues.SHORT_NOURISHMENT_EFFECT));
 	public static final Supplier<Item> SQUID_INK_PASTA = registerWithTab("squid_ink_pasta",
-			(props) -> new ConsumableItem(props, true), bowlFoodItemProps(FoodValues.SQUID_INK_PASTA));
+			(props) -> new ConsumableItem(props, true), bowlFoodItemProps(FoodValues.SQUID_INK_PASTA, FoodValues.LONG_NOURISHMENT_EFFECT));
 	public static final Supplier<Item> GRILLED_SALMON = registerWithTab("grilled_salmon",
-			(props) -> new ConsumableItem(props, true), bowlFoodItemProps(FoodValues.GRILLED_SALMON));
+			(props) -> new ConsumableItem(props, true), bowlFoodItemProps(FoodValues.GRILLED_SALMON, FoodValues.MEDIUM_NOURISHMENT_EFFECT));
 
 	// Feasts
 	public static final Supplier<Item> ROAST_CHICKEN_BLOCK = registerWithTab("roast_chicken_block",
 			(props) -> new BlockItem(ModBlocks.ROAST_CHICKEN_BLOCK.get(), props), stackSizeItemProps(1));
 	public static final Supplier<Item> ROAST_CHICKEN = registerWithTab("roast_chicken",
-			(props) -> new ConsumableItem(props, true), bowlFoodItemProps(FoodValues.ROAST_CHICKEN));
+			(props) -> new ConsumableItem(props, true), bowlFoodItemProps(FoodValues.ROAST_CHICKEN, FoodValues.LONG_NOURISHMENT_EFFECT));
 
 	public static final Supplier<Item> STUFFED_PUMPKIN_BLOCK = registerWithTab("stuffed_pumpkin_block",
 			(props) -> new BlockItem(ModBlocks.STUFFED_PUMPKIN_BLOCK.get(), props), stackSizeItemProps(1));
 	public static final Supplier<Item> STUFFED_PUMPKIN = registerWithTab("stuffed_pumpkin",
-			(props) -> new ConsumableItem(props, true), bowlFoodItemProps(FoodValues.STUFFED_PUMPKIN));
+			(props) -> new ConsumableItem(props, true), bowlFoodItemProps(FoodValues.STUFFED_PUMPKIN, FoodValues.LONG_COMFORT_EFFECT));
 
 	public static final Supplier<Item> HONEY_GLAZED_HAM_BLOCK = registerWithTab("honey_glazed_ham_block",
 			(props) -> new BlockItem(ModBlocks.HONEY_GLAZED_HAM_BLOCK.get(), props), stackSizeItemProps(1));
 	public static final Supplier<Item> HONEY_GLAZED_HAM = registerWithTab("honey_glazed_ham",
-			(props) -> new ConsumableItem(props, true), bowlFoodItemProps(FoodValues.HONEY_GLAZED_HAM));
+			(props) -> new ConsumableItem(props, true), bowlFoodItemProps(FoodValues.HONEY_GLAZED_HAM, FoodValues.LONG_NOURISHMENT_EFFECT));
 
 	public static final Supplier<Item> SHEPHERDS_PIE_BLOCK = registerWithTab("shepherds_pie_block",
 			(props) -> new BlockItem(ModBlocks.SHEPHERDS_PIE_BLOCK.get(), props), stackSizeItemProps(1));
 	public static final Supplier<Item> SHEPHERDS_PIE = registerWithTab("shepherds_pie",
-			(props) -> new ConsumableItem(props, true), bowlFoodItemProps(FoodValues.SHEPHERDS_PIE));
+			(props) -> new ConsumableItem(props, true), bowlFoodItemProps(FoodValues.SHEPHERDS_PIE, FoodValues.LONG_NOURISHMENT_EFFECT));
 
 	public static final Supplier<Item> RICE_ROLL_MEDLEY_BLOCK = registerWithTab("rice_roll_medley_block",
 			(props) -> new BlockItem(ModBlocks.RICE_ROLL_MEDLEY_BLOCK.get(), props), stackSizeItemProps(1));
 
 	// Pet Foods
 	public static final Supplier<Item> DOG_FOOD = registerWithTab("dog_food",
-			(props) -> new DogFoodItem(props), bowlFoodItemProps(FoodValues.DOG_FOOD));
+			(props) -> new DogFoodItem(props), bowlFoodItemProps(FoodValues.DOG_FOOD, Consumables.DEFAULT_FOOD));
 	public static final Supplier<Item> HORSE_FEED = registerWithTab("horse_feed",
 			(props) -> new HorseFeedItem(props), stackSizeItemProps(16));
 }
