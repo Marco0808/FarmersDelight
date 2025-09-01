@@ -51,17 +51,17 @@ import java.util.Optional;
 @SuppressWarnings({"deprecation", "unused"})
 public class SkilletItem extends BlockItem
 {
-	public static final Tiers SKILLET_TIER = Tiers.IRON;
+	public static final ToolMaterial SKILLET_TIER = ToolMaterial.IRON;
 	protected static final ResourceLocation FD_ATTACK_KNOCKBACK_UUID = ResourceLocation.fromNamespaceAndPath(FarmersDelight.MODID, "base_attack_knockback");
 
 	public SkilletItem(Block block, Item.Properties properties) {
-		super(block, properties.durability(SKILLET_TIER.getUses()));
-		float attackDamage = 5.0F + SKILLET_TIER.getAttackDamageBonus();
+		super(block, properties.durability(SKILLET_TIER.durability()));
+		float attackDamage = 5.0F + SKILLET_TIER.attackDamageBonus();
 	}
 
-	public static ItemAttributeModifiers createAttributes(Tier tier, float attackDamage, float attackSpeed) {
+	public static ItemAttributeModifiers createAttributes(ToolMaterial toolMaterial, float attackDamage, float attackSpeed) {
 		return ItemAttributeModifiers.builder()
-				.add(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_ID, attackDamage + tier.getAttackDamageBonus(), AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+				.add(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_ID, attackDamage + toolMaterial.attackDamageBonus(), AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
 				.add(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_ID, attackSpeed, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
 				.add(Attributes.ATTACK_KNOCKBACK, new AttributeModifier(FD_ATTACK_KNOCKBACK_UUID, 1, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND).build();
 	}
@@ -92,13 +92,13 @@ public class SkilletItem extends BlockItem
 	}
 
 	@Override
-	public boolean canAttackBlock(BlockState state, Level level, BlockPos pos, Player player) {
-		return !player.isCreative();
+	public boolean canDestroyBlock(ItemStack stack, BlockState state, Level level, BlockPos pos, LivingEntity entity) {
+		Player player = (Player) entity;
+		return player == null || !player.isCreative();
 	}
 
 	@Override
-	public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-		return true;
+	public void hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
 	}
 
 	@Override
@@ -176,7 +176,7 @@ public class SkilletItem extends BlockItem
 	}
 
 	@Override
-	public void releaseUsing(ItemStack stack, Level level, LivingEntity entity, int timeLeft) {
+	public boolean releaseUsing(ItemStack stack, Level level, LivingEntity entity, int timeLeft) {
 		if (entity instanceof Player player) {
 			ItemStackWrapper storedStack = stack.getOrDefault(ModDataComponents.SKILLET_INGREDIENT, ItemStackWrapper.EMPTY);
 			if (!storedStack.getStack().isEmpty()) {
@@ -184,8 +184,10 @@ public class SkilletItem extends BlockItem
 				player.getInventory().placeItemBackInInventory(cookingStack);
 				stack.remove(ModDataComponents.SKILLET_INGREDIENT);
 				stack.remove(ModDataComponents.COOKING_TIME_LENGTH);
+				return true;
 			}
 		}
+		return false;
 	}
 
 	@Override
@@ -271,6 +273,6 @@ public class SkilletItem extends BlockItem
 
 	@Override
 	public int getEnchantmentValue() {
-		return SKILLET_TIER.getEnchantmentValue();
+		return SKILLET_TIER.enchantmentValue();
 	}
 }
