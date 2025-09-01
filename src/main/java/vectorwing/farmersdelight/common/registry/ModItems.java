@@ -248,12 +248,12 @@ public class ModItems
 	public static final Supplier<Item> TOMATO = registerWithTab("tomato",
 			(props) -> new Item(props), foodItemProps(FoodValues.TOMATO));
 	public static final Supplier<Item> ONION = registerWithTab("onion",
-			(props) -> new ItemNameBlockItem(ModBlocks.ONION_CROP.get(), props), foodItemProps(FoodValues.ONION)));
+			(props) -> new ItemNameBlockItem(ModBlocks.ONION_CROP.get(), props), foodItemProps(FoodValues.ONION));
 	public static final Supplier<Item> RICE_PANICLE = registerWithTab("rice_panicle", (props) -> new Item(props));
 	public static final Supplier<Item> RICE = registerWithTab("rice",
 			(props) -> new RiceItem(ModBlocks.RICE_CROP.get(), props));
 	public static final Supplier<Item> CABBAGE_SEEDS = registerWithTab("cabbage_seeds", (props) -> new ItemNameBlockItem(ModBlocks.CABBAGE_CROP.get(), props));
-	public static final Supplier<Item> TOMATO_SEEDS = registerWithTab("tomato_seeds", (props) -> new ItemNameBlockItem(ModBlocks.BUDDING_TOMATO_CROP.get(), props))
+	public static final Supplier<Item> TOMATO_SEEDS = registerWithTab("tomato_seeds", (props) -> new ItemNameBlockItem(ModBlocks.BUDDING_TOMATO_CROP.get(), props)
 	{
 		@Override
 		public void registerBlocks(Map<Block, Item> blockToItemMap, Item item) {
