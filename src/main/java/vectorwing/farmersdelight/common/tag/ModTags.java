@@ -86,6 +86,9 @@ public class ModTags
 	// Knife items for game logic.
 	public static final TagKey<Item> KNIVES = modItemTag("tools/knives");
 
+	// Repair items for flint tools.
+	public static final TagKey<Item> FLINT_TOOL_MATERIALS = modItemTag("flint_tool_materials");
+
 	// Canvas Signs items for crafting.
 	public static final TagKey<Item> CANVAS_SIGNS = modItemTag("canvas_signs");
 

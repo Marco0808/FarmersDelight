@@ -125,6 +125,7 @@ public class ItemTags extends BlockTagCopyingItemTagProvider
 				ModItems.HONEY_GLAZED_HAM_BLOCK.get(),
 				ModItems.RICE_ROLL_MEDLEY_BLOCK.get()
 		);
+		tag(ModTags.FLINT_TOOL_MATERIALS).add(Items.FLINT);
 		tag(ModTags.KNIVES).add(ModItems.FLINT_KNIFE.get(), ModItems.IRON_KNIFE.get(), ModItems.DIAMOND_KNIFE.get(), ModItems.GOLDEN_KNIFE.get(), ModItems.NETHERITE_KNIFE.get());
 		tag(ModTags.KNIFE_ENCHANTABLE).addTag(ModTags.KNIVES);
 		tag(ModTags.STRAW_HARVESTERS).addTag(ModTags.KNIVES);
