@@ -15,10 +15,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.Recipe;
-import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 import vectorwing.farmersdelight.common.crafting.ingredient.ChanceResult;
 import vectorwing.farmersdelight.common.registry.ModRecipeSerializers;
@@ -64,24 +61,22 @@ public class CuttingBoardRecipe implements Recipe<CuttingBoardRecipeInput>
 	}
 
 	@Override
-	public String getGroup() {
+	public String group() {
 		return this.group;
 	}
 
 	@Override
-	public NonNullList<Ingredient> getIngredients() {
-		NonNullList<Ingredient> nonnulllist = NonNullList.create();
-		nonnulllist.add(this.input);
-		return nonnulllist;
+	public PlacementInfo placementInfo() {
+		return PlacementInfo.create(input);
+	}
+
+	@Override
+	public RecipeBookCategory recipeBookCategory() {
+		return RecipeBookCategories.CRAFTING_MISC;
 	}
 
 	public Ingredient getTool() {
 		return this.tool;
-	}
-
-	@Override
-	public ItemStack getResultItem(HolderLookup.Provider provider) {
-		return this.results.getFirst().stack();
 	}
 
 	public List<ItemStack> getResults() {
@@ -114,17 +109,12 @@ public class CuttingBoardRecipe implements Recipe<CuttingBoardRecipeInput>
 	}
 
 	@Override
-	public boolean canCraftInDimensions(int width, int height) {
-		return width * height >= this.getMaxInputCount();
-	}
-
-	@Override
-	public RecipeSerializer<?> getSerializer() {
+	public RecipeSerializer<? extends Recipe<CuttingBoardRecipeInput>> getSerializer() {
 		return ModRecipeSerializers.CUTTING.get();
 	}
 
 	@Override
-	public RecipeType<?> getType() {
+	public RecipeType<? extends Recipe<CuttingBoardRecipeInput>> getType() {
 		return ModRecipeTypes.CUTTING.get();
 	}
 
@@ -135,7 +125,7 @@ public class CuttingBoardRecipe implements Recipe<CuttingBoardRecipeInput>
 
 		CuttingBoardRecipe that = (CuttingBoardRecipe) o;
 
-		if (!getGroup().equals(that.getGroup())) return false;
+		if (!group().equals(that.group())) return false;
 		if (!input.equals(that.input)) return false;
 		if (!getTool().equals(that.getTool())) return false;
 		if (!getResults().equals(that.getResults())) return false;
@@ -144,7 +134,7 @@ public class CuttingBoardRecipe implements Recipe<CuttingBoardRecipeInput>
 
 	@Override
 	public int hashCode() {
-		int result = (getGroup() != null ? getGroup().hashCode() : 0);
+		int result = (group() != null ? group().hashCode() : 0);
 		result = 31 * result + input.hashCode();
 		result = 31 * result + getTool().hashCode();
 		result = 31 * result + getResults().hashCode();
@@ -158,8 +148,8 @@ public class CuttingBoardRecipe implements Recipe<CuttingBoardRecipeInput>
 				StreamCodec.of(CuttingBoardRecipe.Serializer::toNetwork, CuttingBoardRecipe.Serializer::fromNetwork);
 
 		private static final MapCodec<CuttingBoardRecipe> CODEC = RecordCodecBuilder.mapCodec(
-				inst -> inst.group(Codec.STRING.optionalFieldOf("group", "").forGetter(CuttingBoardRecipe::getGroup),
-								Ingredient.LIST_CODEC_NONEMPTY.fieldOf("ingredients").flatXmap(ingredients -> {
+				inst -> inst.group(Codec.STRING.optionalFieldOf("group", "").forGetter(CuttingBoardRecipe::group),
+								Ingredient.CODEC.listOf().fieldOf("ingredients").flatXmap(ingredients -> {
 									if (ingredients.isEmpty()) {
 										return DataResult.error(() -> "No ingredients for cutting recipe");
 									}
@@ -202,7 +192,7 @@ public class CuttingBoardRecipe implements Recipe<CuttingBoardRecipeInput>
 			resultsIn.replaceAll(ignored -> ChanceResult.read(buffer));
 			Optional<SoundEvent> soundEventIn = Optional.empty();
 			if (buffer.readBoolean()) {
-				Optional<Holder.Reference<SoundEvent>> holder = BuiltInRegistries.SOUND_EVENT.getHolder(buffer.readResourceKey(Registries.SOUND_EVENT));
+				Optional<Holder.Reference<SoundEvent>> holder = BuiltInRegistries.SOUND_EVENT.get(buffer.readResourceKey(Registries.SOUND_EVENT));
 				if (holder.isPresent() && holder.get().isBound()) {
 					soundEventIn = Optional.of(holder.get().value());
 				}

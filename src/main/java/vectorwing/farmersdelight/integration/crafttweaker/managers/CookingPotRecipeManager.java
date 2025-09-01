@@ -9,6 +9,8 @@ import com.blamejared.crafttweaker.api.item.IItemStack;
 import com.blamejared.crafttweaker.api.recipe.manager.base.IRecipeManager;
 import com.blamejared.crafttweaker_annotations.annotations.Document;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeHolder;
@@ -61,7 +63,7 @@ public class CookingPotRecipeManager implements IRecipeManager
 
         CraftTweakerAPI.apply(new ActionAddRecipe(this,
                 new RecipeHolder<>(
-                        CraftTweakerConstants.rl(name),
+						ResourceKey.create(Registries.RECIPE, CraftTweakerConstants.rl(name)),
                         new CookingPotRecipe(
                                 "",
                                 cookingPotRecipeBookTab,

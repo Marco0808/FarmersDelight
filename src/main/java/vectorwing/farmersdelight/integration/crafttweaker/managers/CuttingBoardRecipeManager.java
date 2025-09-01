@@ -11,10 +11,13 @@ import com.blamejared.crafttweaker.api.util.random.Percentaged;
 import com.blamejared.crafttweaker_annotations.annotations.Document;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeType;
 import org.openzen.zencode.java.ZenCodeType;
+import vectorwing.farmersdelight.FarmersDelight;
 import vectorwing.farmersdelight.common.crafting.CuttingBoardRecipe;
 import vectorwing.farmersdelight.common.crafting.ingredient.ChanceResult;
 import vectorwing.farmersdelight.common.registry.ModRecipeTypes;
@@ -55,7 +58,7 @@ public class CuttingBoardRecipeManager implements IRecipeManager
                           IIngredient tool,
                           @ZenCodeType.OptionalString String sound) {
         CraftTweakerAPI.apply(new ActionAddRecipe(this,
-                new RecipeHolder(CraftTweakerConstants.rl(name),
+				new RecipeHolder(ResourceKey.create(Registries.RECIPE, CraftTweakerConstants.rl(name)),
                 new CuttingBoardRecipe("",
                         input.asVanillaIngredient(),
                         tool.asVanillaIngredient(),
